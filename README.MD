@@ -1,4 +1,4 @@
-### Notas App
+### QuickNote ⚡️
 
 Una sencilla aplicación para tomar notas rápidas y organizarlas fácilmente.
 
