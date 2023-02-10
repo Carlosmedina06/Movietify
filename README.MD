@@ -1,6 +1,6 @@
-### QuickNote ⚡️
+### QuickTask ⚡️
 
-Una sencilla aplicación para tomar notas rápidas y organizarlas fácilmente.
+Una sencilla aplicación para añadir tareas y organizarlas fácilmente.
 
 ![Alt text][def]
 
@@ -9,9 +9,9 @@ Una sencilla aplicación para tomar notas rápidas y organizarlas fácilmente.
 
 ### Características
 
-- Creación y edición de notas
-- Organización de notas por categorías
-- Busqueda de notas
+- Creación y edición de tareas
+- Organización de tareas por categorías
+- Busqueda de tareas
 - Interfaz intuitiva y fácil de usar
 
 ### Requisitos
@@ -25,4 +25,4 @@ Disponible en la App Store y Google Play Store.
 
 ### Soporte
 
-Si tienes algún problema o sugerencia, por favor envíanos un correo electrónico a support@notesapp.com. Estaremos encantados de ayudarte.
+Si tienes algún problema o sugerencia, por favor envíanos un correo electrónico a support@quiktask.com. Estaremos encantados de ayudarte.
