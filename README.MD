@@ -1,6 +1,6 @@
-### Notas App
+### QuickTask ⚡️
 
-Una sencilla aplicación para tomar notas rápidas y organizarlas fácilmente.
+Una sencilla aplicación para tomar tareas rápidas y organizarlas fácilmente.
 
 ![Alt text][def]
 
@@ -25,4 +25,4 @@ Disponible en la App Store y Google Play Store.
 
 ### Soporte
 
-Si tienes algún problema o sugerencia, por favor envíanos un correo electrónico a support@notesapp.com. Estaremos encantados de ayudarte.
+Si tienes algún problema o sugerencia, por favor envíanos un correo electrónico a support@quicktasks.com. Estaremos encantados de ayudarte.
