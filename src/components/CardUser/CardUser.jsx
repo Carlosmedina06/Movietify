@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { FontAwesome5 } from '@expo/vector-icons'
 
 import {
   UserCard,
@@ -7,6 +6,7 @@ import {
   UserCardBody,
   UserCardHeader,
   UserCardInput,
+  UserCardInputArrow,
   UserCardInputIcon,
   UserCardTitle,
 } from './CardUserStyle'
@@ -36,7 +36,7 @@ const CardUser = () => {
           onSubmitEditing={handlePress}
         />
         <UserCardInputIcon onPress={handlePress}>
-          <FontAwesome5 color="#fff" name="arrow-right" />
+          <UserCardInputArrow>→</UserCardInputArrow>
         </UserCardInputIcon>
       </UserCardBody>
     </UserCard>
