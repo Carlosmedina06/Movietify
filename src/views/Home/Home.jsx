@@ -1,11 +1,17 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { StatusBar } from 'expo-status-bar'
+
+import CardUser from '../../components/CardUser/CardUser'
+
+import { Container } from './HomeStyle'
 
 const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <>
+      <StatusBar />
+      <Container>
+        <CardUser />
+      </Container>
+    </>
   )
 }
 
