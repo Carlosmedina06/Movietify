@@ -2,31 +2,30 @@ import React, { useState } from 'react'
 import uuid from 'react-native-uuid'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch } from 'react-redux'
-import * as Notifications from 'expo-notifications'
-import {
-  Keyboard,
-  TouchableWithoutFeedback,
-  View,
-  Text,
-  TextInput,
-  Switch,
-  TouchableOpacity,
-} from 'react-native'
+import { Keyboard, TouchableWithoutFeedback } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { useNavigation } from '@react-navigation/native'
 
 import { addTask } from '../../features/Task/TaskSlice'
 
-import { Container } from './AddTaskStyle'
+import {
+  Button,
+  ButtonText,
+  Container,
+  DataView,
+  Input,
+  InputContainer,
+  InputLabel,
+} from './AddTaskStyle'
 
 const AddTask = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
   const [task, setTask] = useState({
     title: '',
     description: '',
-    isToday: false,
     time: new Date(),
     date: new Date(),
-    withAlert: false,
   })
 
   const handleAddTask = async () => {
@@ -34,7 +33,6 @@ const AddTask = () => {
       id: uuid.v4(),
       title: task.title,
       description: task.description,
-      isToday: task.isToday,
       time: task.time.toISOString(),
       date: task.date.toISOString(),
     }
@@ -45,39 +43,26 @@ const AddTask = () => {
 
       await AsyncStorage.setItem('tasks', JSON.stringify([...parsedTasks, newTask]))
       dispatch(addTask(newTask))
-      if (task.withAlert) {
-        scheduleTodoNotification(newTask)
-      }
+      await setTask({
+        title: '',
+        description: '',
+        time: new Date(),
+        date: new Date(),
+      })
+      await alert('Task added successfully')
+      navigation.navigate('Home')
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error)
     }
   }
 
-  const scheduleTodoNotification = async (task) => {
-    const trigger = new Date(task.date + 'T' + task.time)
-
-    try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'Alert! You have a task to do!',
-          body: task.description,
-        },
-        trigger,
-      })
-      // eslint-disable-next-line no-console
-      console.log('Notification scheduled')
-    } catch (e) {
-      alert('The notification failed to schedule, make sure the hour is valid')
-    }
-  }
-
   return (
     <Container>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View>
-          <Text>Title</Text>
-          <TextInput
+        <InputContainer>
+          <InputLabel>Title</InputLabel>
+          <Input
             placeholder="title"
             placeholderTextColor="#00000030"
             value={task.title}
@@ -85,19 +70,18 @@ const AddTask = () => {
               setTask({ ...task, title: text })
             }}
           />
-          <View>
-            <Text>description</Text>
-            <TextInput
-              placeholder="description"
-              placeholderTextColor="#00000030"
-              value={task.description}
-              onChangeText={(text) => {
-                setTask({ ...task, description: text })
-              }}
-            />
-          </View>
-          <View>
-            <Text>Date</Text>
+
+          <InputLabel>description</InputLabel>
+          <Input
+            placeholder="description"
+            placeholderTextColor="#00000030"
+            value={task.description}
+            onChangeText={(text) => {
+              setTask({ ...task, description: text })
+            }}
+          />
+          <DataView>
+            <InputLabel>Date</InputLabel>
             <DateTimePicker
               mode={'date'}
               style={{ width: '80%' }}
@@ -108,9 +92,9 @@ const AddTask = () => {
                 setTask({ ...task, date: currentDate })
               }}
             />
-          </View>
-          <View>
-            <Text>Hour</Text>
+          </DataView>
+          <DataView>
+            <InputLabel>Hour</InputLabel>
             <DateTimePicker
               is24Hour={true}
               mode={'time'}
@@ -122,36 +106,12 @@ const AddTask = () => {
                 setTask({ ...task, time: currentTime })
               }}
             />
-          </View>
-          <View>
-            <View>
-              <Text>Today</Text>
-              <Text>If you disable today, the task will be considered as tomorrow</Text>
-            </View>
-            <Switch
-              value={task.isToday}
-              onValueChange={(value) => {
-                setTask({ ...task, isToday: value })
-              }}
-            />
-          </View>
-          <View>
-            <View>
-              <Text>Alert</Text>
-              <Text>You will receive an alert at the time you set for this reminder</Text>
-            </View>
-            <Switch
-              value={task.withAlert}
-              onValueChange={(value) => {
-                setTask({ ...task, withAlert: value })
-              }}
-            />
-          </View>
+          </DataView>
 
-          <TouchableOpacity onPress={handleAddTask}>
-            <Text>Done</Text>
-          </TouchableOpacity>
-        </View>
+          <Button onPress={handleAddTask}>
+            <ButtonText>Add Task</ButtonText>
+          </Button>
+        </InputContainer>
       </TouchableWithoutFeedback>
     </Container>
   )
