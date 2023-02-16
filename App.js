@@ -76,7 +76,6 @@ export default function App() {
               },
             }}
           />
-
           <Tab.Screen component={Tasks} name="Tasks" />
           <Tab.Screen component={Perfil} name="Perfil" />
         </Tab.Navigator>

@@ -1,5 +1,5 @@
+import { useSelector } from 'react-redux'
 import { Text } from 'react-native'
-import React from 'react'
 
 import TaskButton from '../Button/TaskButton'
 
@@ -13,6 +13,10 @@ import {
 } from './CardTaskStyle'
 
 export default function CardTask() {
+  const tasks = useSelector((state) => state.tasks.tasks)
+
+  console.log(tasks, 'cardtask')
+
   return (
     <TaskCard>
       <TaskCardHeader>
