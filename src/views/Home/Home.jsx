@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import CardUser from '../../components/UserCard/UserCard'
 import TaskList from '../../components/TaskList/TaskList'
-import { data } from '../../../data'
+import { getTasks, hideCompletedTask } from '../../redux/taskSlice'
 
 import {
   FloatingButton,
@@ -18,30 +20,39 @@ import {
 
 export default function Home() {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const tasks = useSelector((state) => state.tasks.tasks)
   const [hideCompleted, setHideCompleted] = useState(false)
-  const [localData, setLocalData] = useState(
-    data.sort((a, b) => {
-      return a.completed - b.completed
-    }),
-  )
 
-  const handleHideCompleted = () => {
+  useEffect(() => {
+    const getTask = async () => {
+      try {
+        const tasks = await AsyncStorage.getItem('@tasks')
+
+        if (tasks) {
+          dispatch(getTasks(JSON.parse(tasks)))
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      }
+    }
+
+    getTask()
+  }, [dispatch])
+
+  const handleHideCompleted = async () => {
     if (hideCompleted) {
       setHideCompleted(false)
-      setLocalData(
-        data.sort((a, b) => {
-          a.completed - b.completed
-        }),
-      )
+      const tasks = await AsyncStorage.getItem('@tasks')
+
+      dispatch(getTasks(JSON.parse(tasks)))
 
       return
     }
-    setHideCompleted(!hideCompleted)
-    setLocalData(
-      localData.filter((task) => {
-        return !task.completed
-      }),
-    )
+
+    setHideCompleted(true)
+    dispatch(hideCompletedTask())
   }
 
   return (
@@ -57,7 +68,7 @@ export default function Home() {
               </HideCompleteText>
             </HideComplete>
           </HomeHeader>
-          <TaskList Tasks={localData.filter((task) => task.isToday)} />
+          <TaskList Tasks={tasks.filter((task) => task.isToday)} />
           <HomeHeader>
             <HomeTitle>Upcoming Task</HomeTitle>
             <HideComplete>
@@ -65,7 +76,7 @@ export default function Home() {
             </HideComplete>
           </HomeHeader>
           <TaskList
-            Tasks={localData.filter((task) => {
+            Tasks={tasks.filter((task) => {
               return !task.isToday
             })}
           />
