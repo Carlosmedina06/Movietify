@@ -8,7 +8,7 @@ export const UserCard = styled.View`
   background-color: #050c31;
   border-radius: 20px;
   padding: 10px 20px 0px 20px;
-  drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  box-shadow: 0px 4px 4px rgba(5, 12, 49, 0.9);
 `
 export const UserCardHeader = styled.View`
   flex-direction: row;

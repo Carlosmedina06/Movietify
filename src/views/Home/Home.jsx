@@ -82,7 +82,7 @@ export default function Home() {
           />
         </ScrollView>
       </HomeContainer>
-      <FloatingButton onPress={() => navigation.navigate('AddTask')}>
+      <FloatingButton onPress={() => navigation.navigate('Login')}>
         <FloatingButtonText>+</FloatingButtonText>
       </FloatingButton>
     </>

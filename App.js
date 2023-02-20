@@ -5,6 +5,8 @@ import { Provider } from 'react-redux'
 import Home from './src/views/Home/Home'
 import AddTask from './src/views/AddTask/AddTask'
 import { store } from './src/redux/store'
+import Login from './src/views/Login/Login'
+import Register from './src/views/Register/Register'
 
 const Stack = createNativeStackNavigator()
 
@@ -21,6 +23,8 @@ export default function App() {
               presentation: 'modal',
             }}
           />
+          <Stack.Screen component={Login} name="Login" />
+          <Stack.Screen component={Register} name="Register" />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
