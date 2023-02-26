@@ -2,9 +2,6 @@
 
 Una sencilla aplicación para tomar tareas rápidas y organizarlas fácilmente.
 
-![Alt text][def]
-
-[def]: ./assets/AppNote.jpg "App Note"
 
 
 ### Características
