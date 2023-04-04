@@ -61,16 +61,3 @@ export const LoginButtonText = styled.Text`
   font-weight: bold;
   color: #050c31;
 `
-export const LoginGoogle = styled.TouchableOpacity`
-  width: 70%;
-  height: 40px;
-  background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  padding: 0 10px;
-  color: #fff;
-  margin: 0px 0 20px 0;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-`
