@@ -1,8 +1,8 @@
-import { FontAwesome } from '@expo/vector-icons'
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
+import { useState } from 'react'
 
-import { signinGoogle, loginLocal, registerLocal } from '../../redux/loginSlice'
+import { loginLocal } from '../../redux/loginSlice'
 
 import {
   Label,
@@ -13,36 +13,24 @@ import {
   LoginCardHeader,
   LoginCardInput,
   LoginCardTitle,
-  LoginGoogle,
 } from './LoginCardStyle'
 
 const LoginCard = () => {
+  const navigation = useNavigation()
   const dispatch = useDispatch()
   const [user, setUser] = useState({
     email: '',
     password: '',
   })
 
-  const handleLogin = () => {
-    dispatch(loginLocal(user))
-
-    setUser({
-      email: '',
-      password: '',
-    })
-  }
-
-  const HandleGoogle = () => {
-    dispatch(signinGoogle())
-  }
-
-  const register = () => {
-    dispatch(registerLocal(user))
-
-    setUser({
-      email: '',
-      password: '',
-    })
+  const handleLogin = async () => {
+    try {
+      await dispatch(loginLocal(user))
+      setUser({ email: '', password: '' })
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
   }
 
   return (
@@ -64,6 +52,7 @@ const LoginCard = () => {
         <LoginCardInput
           placeholder="Password"
           placeholderTextColor="#ffff"
+          secureTextEntry={true}
           value={user.password}
           onChangeText={(text) => {
             setUser({ ...user, password: text })
@@ -72,12 +61,7 @@ const LoginCard = () => {
         <LoginButton onPress={handleLogin}>
           <LoginButtonText>Login</LoginButtonText>
         </LoginButton>
-        <LoginGoogle onPress={HandleGoogle}>
-          <LoginButtonText>
-            <FontAwesome color="#050c31" name="google" size={18} /> Login with Google
-          </LoginButtonText>
-        </LoginGoogle>
-        <LoginButton onPress={register}>
+        <LoginButton onPress={() => navigation.navigate('Register')}>
           <LoginButtonText>Register</LoginButtonText>
         </LoginButton>
       </LoginCardBody>
