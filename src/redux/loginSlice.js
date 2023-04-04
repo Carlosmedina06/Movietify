@@ -1,11 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from 'firebase/auth'
+import { signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { auth } from '../utils/firebase/firebase'
@@ -48,22 +42,6 @@ export const loginSlice = createSlice({
         user: response.user,
       }
     },
-    signinGoogle: async (state) => {
-      try {
-        const provider = new GoogleAuthProvider()
-        const response = await signInWithPopup(auth, provider)
-
-        await AsyncStorage.setItem('@token', response._tokenResponse.idToken)
-
-        return {
-          ...state,
-          user: response.user,
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error)
-      }
-    },
 
     logout: async (state) => {
       await signOut(auth)
@@ -76,6 +54,6 @@ export const loginSlice = createSlice({
   },
 })
 
-export const { login, registerLocal, loginLocal, signinGoogle, logout } = loginSlice.actions
+export const { login, registerLocal, loginLocal, logout } = loginSlice.actions
 
 export default loginSlice.reducer
